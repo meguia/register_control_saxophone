@@ -1,0 +1,67 @@
+┌ Info: ("Subject", "70")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:168
+┌ Info: ("Instrument", "alto")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:169
+┌ Info: ("block", 3)
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:170
+┌ Info: ("type", "Real")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:171
+┌ Info: ("fingering", "Dx4")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:172
+┌ Info: ("source", DESource:
+│ f: saxRN!
+│ u0: [-0.0, 0.0, 0.0, 0.001, 0.0, 0.001, 0.0, 0.001, 0.0, 0.001, 0.0, 0.001, 0.0, 0.001, 0.0, 0.001, 0.0, 0.001]
+│ p: [0.0, 0.99, 0.00979661595879188, 0.01936891284757492, 0.028360608704342382, 0.07432143849663234, 0.050548821250474996, 0.11670566159228501, 0.09216364364868869, 0.06198262884427968, 1.2338084566478504, 2.4878515275295494, 3.713067761216321, 4.708967745444628, 5.162349633118768, 6.423192090747518, 6.796511492605703, 8.028786854008391, 0.1743716819551786, 0.5578016350295758, 0.7229214135041638, 0.20563375244332302, 0.3856853535936764, 0.3217763876557924, 0.061991433399029294, 0.308559675011552]
+│ ts: 973.0
+│ gain: 0.0
+│ channel_map: [[3, 5, 7, 9, 11, 13, 15, 17]]
+│ )
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:195
+┌ Info: ("nmodes", 8)
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:196
+┌ Info: ("param_map", [(0, 2000, 0.0, 0.99), (9000, 15000, 0.99, 0.0)])
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:197
+┌ Info: ("task", "Practice")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_Practice_7962096998458.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233
+┌ Info: ("task", "Practice")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_Practice_8188085946541.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233
+┌ Info: ("task", "LegatoAsc")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_LegatoAsc_8226334646041.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233
+┌ Info: ("task", "LegatoAsc")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_LegatoAsc_8239911509791.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233
+┌ Info: ("task", "LegatoAsc")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_LegatoAsc_8255135301875.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233
+┌ Info: ("task", "LegatoDesc")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_LegatoDesc_8273975167500.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233
+┌ Info: ("task", "NonlegatoAsc")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_NonlegatoAsc_8287265010625.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233
+┌ Info: ("task", "NonlegatoDesc")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_NonlegatoDesc_8299113521250.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233
+┌ Info: ("task", "Overtone")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_Overtone_8312029865541.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233
+┌ Info: ("task", "Overtone")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_Overtone_8342688484125.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233
+┌ Info: ("task", "LegatoAsc")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:232
+┌ Info: ("datafile", "/Users/lapso/RTSax-Experiment/src/sessions/S70_Real_Dx4_LegatoAsc_8361738863583.dat")
+└ @ Main /Users/lapso/RTSax-Experiment/src/rt_sax_experiment_block.jl:233

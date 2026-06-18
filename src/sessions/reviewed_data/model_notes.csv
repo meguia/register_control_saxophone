@@ -1,0 +1,141 @@
+subject_id,type,block,task,audiofile,success,state,flag,comment
+13,Model,1,LegatoAsc,S13_click_02_segment_13.wav,true,ok,criterio,en el limite se corta
+13,Model,1,LegatoDesc,S13_click_02_segment_7.wav,true,ok,audiofile,el grave suena multiestable
+13,Model,1,NonlegatoAsc,S13_click_02_segment_8.wav,true,ok,,
+13,Model,1,NonlegatoDesc,S13_click_02_segment_9.wav,true,ok,,
+13,Model,1,Overtone,S13_click_02_segment_11.wav,true,ok,,
+13,Model,2,LegatoAsc,S13_click_04_segment_18.wav,false,ok,,
+13,Model,2,LegatoDesc,S13_click_04_segment_12.wav,true,ok,audiofile,es corto el grave
+13,Model,2,NonlegatoAsc,S13_click_04_segment_3.wav,true,ok,,
+13,Model,2,NonlegatoDesc,S13_click_04_segment_4.wav,true,ok,,
+13,Model,2,Overtone,S13_click_04_segment_16.wav,true,ok,,
+22,Model,1,LegatoAsc,S22_click_02_segment_19.wav,false,ok,,ataca dos veces
+22,Model,1,LegatoDesc,S22_click_02_segment_11.wav,true,ok,,
+22,Model,1,NonlegatoAsc,S22_click_02_segment_12.wav,true,ok,,
+22,Model,1,NonlegatoDesc,S22_click_02_segment_13.wav,true,ok,,
+22,Model,1,Overtone,S22_click_02_segment_16.wav,false,ok,,f?
+22,Model,2,LegatoAsc,S22_click_04_segment_16.wav,false,ok,,
+22,Model,2,LegatoDesc,S22_click_04_segment_9.wav,true,ok,,
+22,Model,2,NonlegatoAsc,S22_click_04_segment_2.wav,true,ok,,
+22,Model,2,NonlegatoDesc,S22_click_04_segment_3.wav,true,ok,,
+22,Model,2,Overtone,S22_click_04_segment_14.wav,true,ok,,
+27,Model,1,LegatoAsc,S27_click_02_segment_6.wav,false,ok,,
+27,Model,1,LegatoDesc,S27_click_02_segment_10.wav,true,ok,,
+27,Model,1,NonlegatoAsc,S27_click_02_segment_2.wav,true,ok,,
+27,Model,1,NonlegatoDesc,S27_click_02_segment_3.wav,true,ok,,
+27,Model,1,Overtone,S27_click_02_segment_13.wav,true,ok,,f?
+27,Model,2,LegatoAsc,S27_click_04_segment_4.wav,false,ok,,
+27,Model,2,LegatoDesc,S27_click_04_segment_8.wav,true,ok,criterio,el agudo esta pero muy apretado
+27,Model,2,NonlegatoAsc,S27_click_04_segment_9.wav,false,ok,dudoso,segunda nota no alcanza amplitud
+27,Model,2,NonlegatoDesc,S27_click_04_segment_11.wav,true,ok,criterio,suena mas overtone que nld
+27,Model,2,Overtone,S27_click_04_segment_17.wav,true,ok,,f?
+33,Model,1,LegatoAsc,S33_click_02_segment_3.wav,true,ok,,
+33,Model,1,LegatoDesc,S33_click_02_segment_4.wav,true,ok,,
+33,Model,1,NonlegatoAsc,S33_click_02_segment_5.wav,true,ok,,
+33,Model,1,NonlegatoDesc,S33_click_02_segment_6.wav,true,ok,,
+33,Model,1,Overtone,S33_click_02_segment_7.wav,false,ok,,
+33,Model,2,LegatoAsc,S33_click_04_segment_4.wav,true,ok,,
+33,Model,2,LegatoDesc,S33_click_04_segment_5.wav,true,ok,,
+33,Model,2,NonlegatoAsc,S33_click_04_segment_2.wav,true,ok,,
+33,Model,2,NonlegatoDesc,S33_click_04_segment_3.wav,true,ok,,
+33,Model,2,Overtone,S33_click_04_segment_6.wav,true,ok,,dudoso
+34,Model,1,LegatoAsc,S34_click_02_segment_4.wav,true,ok,,
+34,Model,1,LegatoDesc,S34_click_02_segment_5.wav,true,ok,,
+34,Model,1,NonlegatoAsc,S34_click_02_segment_6.wav,true,ok,,
+34,Model,1,NonlegatoDesc,S34_click_02_segment_7.wav,true,ok,,
+34,Model,1,Overtone,S34_click_02_segment_9.wav,true,ok,,
+34,Model,2,LegatoAsc,S34_click_04_segment_3.wav,true,ok,,
+34,Model,2,LegatoDesc,S34_click_04_segment_4.wav,true,ok,,
+34,Model,2,NonlegatoAsc,S34_click_04_segment_5.wav,true,ok,,
+34,Model,2,NonlegatoDesc,S34_click_04_segment_6.wav,true,ok,,
+34,Model,2,Overtone,S34_click_04_segment_8.wav,true,ok,,dudoso
+37,Model,1,LegatoAsc,S37_click_01_segment_6.wav,false,ok,,
+37,Model,1,LegatoDesc,S37_click_01_segment_7.wav,true,ok,,
+37,Model,1,NonlegatoAsc,S37_click_01_segment_8.wav,true,ok,,
+37,Model,1,NonlegatoDesc,S37_click_01_segment_9.wav,true,ok,,
+37,Model,1,Overtone,S37_click_01_segment_13.wav,true,ok,,dudoso
+37,Model,2,LegatoAsc,S37_click_03_segment_14.wav,false,ok,,
+37,Model,2,LegatoDesc,S37_click_03_segment_15.wav,true,ok,,
+37,Model,2,NonlegatoAsc,S37_click_03_segment_9.wav,true,ok,,
+37,Model,2,NonlegatoDesc,S37_click_03_segment_10.wav,true,ok,,
+37,Model,2,Overtone,S37_click_03_segment_20.wav,true,ok,,
+49,Model,1,LegatoAsc,S49_click_01_segment_13.wav,false,ok,,
+49,Model,1,LegatoDesc,S49_click_01_segment_15.wav,true,ok,,
+49,Model,1,NonlegatoAsc,S49_click_01_segment_7.wav,true,ok,,
+49,Model,1,NonlegatoDesc,S49_click_01_segment_8.wav,true,ok,audiofile,se cambio el audiofile
+49,Model,1,Overtone,S49_click_01_segment_22.wav,true,ok,,
+49,Model,2,LegatoAsc,S49_click_03_segment_9.wav,false,ok,,
+49,Model,2,LegatoDesc,S49_click_03_segment_13.wav,true,ok,,
+49,Model,2,NonlegatoAsc,S49_click_03_segment_3.wav,true,ok,,
+49,Model,2,NonlegatoDesc,S49_click_03_segment_5.wav,true,ok,,
+49,Model,2,Overtone,S49_click_03_segment_15.wav,true,ok,,
+50,Model,1,LegatoAsc,S50_click_01_segment_7.wav,false,ok,,
+50,Model,1,LegatoDesc,S50_click_01_segment_8.wav,true,ok,,
+50,Model,1,NonlegatoAsc,S50_click_01_segment_5.wav,true,ok,,
+50,Model,1,NonlegatoDesc,S50_click_01_segment_6.wav,true,ok,,
+50,Model,1,Overtone,S50_click_01_segment_12.wav,true,ok,,
+50,Model,2,LegatoAsc,S50_click_03_segment_6.wav,true,ok,,
+50,Model,2,LegatoDesc,S50_click_03_segment_7.wav,true,ok,,
+50,Model,2,NonlegatoAsc,S50_click_03_segment_2.wav,true,ok,,
+50,Model,2,NonlegatoDesc,S50_click_03_segment_3.wav,true,ok,,
+50,Model,2,Overtone,S50_click_03_segment_9.wav,true,ok,,
+64,Model,1,LegatoAsc,S64_click_02_segment_6.wav,false,ok,,
+64,Model,1,LegatoDesc,S64_click_02_segment_8.wav,false,ok,criterio,el gesto esta pero parece un overtone
+64,Model,1,NonlegatoAsc,S64_click_02_segment_2.wav,false,ok,dudoso,
+64,Model,1,NonlegatoDesc,S64_click_02_segment_3.wav,true,ok,dudoso,
+64,Model,1,Overtone,S64_click_02_segment_10.wav,true,ok,,
+64,Model,2,LegatoAsc,S64_click_04_segment_10.wav,false,ok,criterio,
+64,Model,2,LegatoDesc,S64_click_04_segment_6.wav,true,ok,criterio,el problema esta en el ataque
+64,Model,2,NonlegatoAsc,S64_click_04_segment_7.wav,true,ok,,
+64,Model,2,NonlegatoDesc,S64_click_04_segment_8.wav,true,ok,,
+64,Model,2,Overtone,S64_click_04_segment_9.wav,true,ok,,dudoso
+70,Model,1,LegatoAsc,S70_click_02_segment_12.wav,false,ok,,
+70,Model,1,LegatoDesc,S70_click_02_segment_14.wav,true,ok,,
+70,Model,1,NonlegatoAsc,S70_click_02_segment_6.wav,false,ok,dudoso,
+70,Model,1,NonlegatoDesc,S70_click_02_segment_7.wav,true,ok,,
+70,Model,1,Overtone,S70_click_02_segment_19.wav,true,ok,,
+70,Model,2,LegatoAsc,S70_click_04_segment_9.wav,false,ok,,
+70,Model,2,LegatoDesc,S70_click_04_segment_11.wav,false,ok,criterio,no se registro la fuerza
+70,Model,2,NonlegatoAsc,S70_click_04_segment_5.wav,false,ok,criterio,no se registro la fuerza el gesto esta bien
+70,Model,2,NonlegatoDesc,S70_click_04_segment_6.wav,false,ok,sensores,no se registro la fuerza
+70,Model,2,Overtone,S70_click_04_segment_13.wav,false,ok,,no se registro la fuerza
+80,Model,1,LegatoAsc,S80_click_01_segment_18.wav,false,ok,,
+80,Model,1,LegatoDesc,S80_click_01_segment_6.wav,true,ok,,
+80,Model,1,NonlegatoAsc,S80_click_01_segment_7.wav,true,ok,,
+80,Model,1,NonlegatoDesc,S80_click_01_segment_9.wav,true,ok,,
+80,Model,1,Overtone,S80_click_01_segment_13.wav,true,ok,,
+80,Model,2,LegatoAsc,S80_click_03_segment_13.wav,true,ok,,
+80,Model,2,LegatoDesc,S80_click_03_segment_7.wav,true,ok,,
+80,Model,2,NonlegatoAsc,S80_click_03_segment_2.wav,true,ok,,
+80,Model,2,NonlegatoDesc,S80_click_03_segment_4.wav,false,ok,dudoso,
+80,Model,2,Overtone,S80_click_03_segment_9.wav,false,ok,,no se registro la fuerza
+83,Model,1,LegatoAsc,S83_click_01_segment_18.wav,true,ok,,
+83,Model,1,LegatoDesc,S83_click_01_segment_6.wav,false,ok,criterio,sensor de fuerza cae a cero al final
+83,Model,1,NonlegatoAsc,S83_click_01_segment_9.wav,true,ok,criterio,suena la multiestabilidad en el ataque pero esta bien
+83,Model,1,NonlegatoDesc,S83_click_01_segment_10.wav,false,ok,dudoso,  
+83,Model,1,Overtone,S83_click_01_segment_16.wav,true,ok,,
+83,Model,2,LegatoAsc,S83_click_03_segment_12.wav,true,ok,,
+83,Model,2,LegatoDesc,S83_click_03_segment_5.wav,true,ok,,
+83,Model,2,NonlegatoAsc,S83_click_03_segment_6.wav,true,ok,criterio,suena la multiestabilidad en el ataque pero esta bien
+83,Model,2,NonlegatoDesc,S83_click_03_segment_8.wav,true,ok,,
+83,Model,2,Overtone,S83_click_03_segment_10.wav,true,ok,,
+88,Model,1,LegatoAsc,S88_click_02_segment_10.wav,false,ok,criterio,no hay presion de soplado. el grafico de los modos debe ser el ruido mínimo que hace el modelo cuando solo se modifica Zeta
+88,Model,1,LegatoDesc,S88_click_02_segment_7.wav,true,ok,,
+88,Model,1,NonlegatoAsc,S88_click_02_segment_3.wav,true,ok,,
+88,Model,1,NonlegatoDesc,S88_click_02_segment_4.wav,true,ok,,
+88,Model,1,Overtone,S88_click_02_segment_11.wav,true,ok,,
+88,Model,2,LegatoAsc,S88_click_04_segment_6.wav,false,ok,,
+88,Model,2,LegatoDesc,S88_click_04_segment_9.wav,true,ok,,
+88,Model,2,NonlegatoAsc,S88_click_04_segment_2.wav,true,ok,,
+88,Model,2,NonlegatoDesc,S88_click_04_segment_4.wav,true,ok,,
+88,Model,2,Overtone,S88_click_04_segment_10.wav,true,ok,,
+90,Model,1,LegatoAsc,S90_click_01_segment_14.wav,false,ok,,
+90,Model,1,LegatoDesc,S90_click_01_segment_6.wav,true,ok,,
+90,Model,1,NonlegatoAsc,S90_click_01_segment_7.wav,false,ok,sensores,fuerza cae a cero en mitad de la segunda nota
+90,Model,1,NonlegatoDesc,S90_click_01_segment_8.wav,true,ok,,
+90,Model,1,Overtone,S90_click_01_segment_12.wav,false,ok,,f?
+90,Model,2,LegatoAsc,S90_click_03_segment_5.wav,false,ok,audiofile,es un legatodesc exitoso
+90,Model,2,LegatoDesc,S90_click_03_segment_7.wav,true,ok,criterio,no se registro la fuerza el gesto esta bien
+90,Model,2,NonlegatoAsc,S90_click_03_segment_2.wav,true,ok,,
+90,Model,2,NonlegatoDesc,S90_click_03_segment_3.wav,true,ok,,
+90,Model,2,Overtone,S90_click_03_segment_9.wav,true,ok,,

@@ -1,0 +1,141 @@
+subject_id,type,block,task,audiofile,success,state,flag,comment
+13,Real,1,LegatoAsc,S13_click_01_segment_5.wav,true,ok,,
+13,Real,1,LegatoDesc,S13_click_01_segment_6.wav,true,ok,,
+13,Real,1,NonlegatoAsc,S13_click_01_segment_3.wav,true,ok,,
+13,Real,1,NonlegatoDesc,S13_click_01_segment_4.wav,true,ok,,
+13,Real,1,Overtone,S13_click_01_segment_8.wav,false,ok,,criterio musical
+13,Real,2,LegatoAsc,S13_click_03_segment_4.wav,true,ok,,
+13,Real,2,LegatoDesc,S13_click_03_segment_5.wav,true,ok,,
+13,Real,2,NonlegatoAsc,S13_click_03_segment_2.wav,true,ok,,
+13,Real,2,NonlegatoDesc,S13_click_03_segment_3.wav,true,ok,,
+13,Real,2,Overtone,S13_click_03_segment_9.wav,true,ok,,
+22,Real,1,LegatoAsc,S22_click_01_segment_10.wav,true,ok,,
+22,Real,1,LegatoDesc,S22_click_01_segment_11.wav,true,ok,,
+22,Real,1,NonlegatoAsc,S22_click_01_segment_3.wav,true,ok,,
+22,Real,1,NonlegatoDesc,S22_click_01_segment_4.wav,true,ok,,
+22,Real,1,Overtone,S22_click_01_segment_16.wav,true,ok,,
+22,Real,2,LegatoAsc,S22_click_03_segment_3.wav,false,ok,,
+22,Real,2,LegatoDesc,S22_click_03_segment_5.wav,true,ok,,
+22,Real,2,NonlegatoAsc,S22_click_03_segment_6.wav,true,ok,criterio,
+22,Real,2,NonlegatoDesc,S22_click_03_segment_7.wav,true,ok,,
+22,Real,2,Overtone,S22_click_03_segment_9.wav,true,ok,,
+27,Real,1,LegatoAsc,S27_click_01_segment_3.wav,false,ok,audiofile,es un legatodesc
+27,Real,1,LegatoDesc,S27_click_01_segment_6.wav,true,ok,,
+27,Real,1,NonlegatoAsc,S27_click_01_segment_7.wav,true,ok,,ataca primero el segundo modo
+27,Real,1,NonlegatoDesc,S27_click_01_segment_8.wav,false,ok,audiofile,suena un nonlegatoasc
+27,Real,1,Overtone,S27_click_01_segment_9.wav,true,ok,,
+27,Real,2,LegatoAsc,S27_click_03_segment_4.wav,true,ok,,
+27,Real,2,LegatoDesc,S27_click_03_segment_5.wav,true,ok,,
+27,Real,2,NonlegatoAsc,S27_click_03_segment_6.wav,true,ok,,
+27,Real,2,NonlegatoDesc,S27_click_03_segment_7.wav,true,ok,,
+27,Real,2,Overtone,S27_click_03_segment_9.wav,true,ok,,
+33,Real,1,LegatoAsc,S33_click_01_segment_16.wav,true,ok,,
+33,Real,1,LegatoDesc,S33_click_01_segment_8.wav,true,ok,,
+33,Real,1,NonlegatoAsc,S33_click_01_segment_9.wav,true,ok,,
+33,Real,1,NonlegatoDesc,S33_click_01_segment_10.wav,true,ok,,
+33,Real,1,Overtone,S33_click_01_segment_14.wav,true,ok,,
+33,Real,2,LegatoAsc,S33_click_03_segment_4.wav,false,ok,,
+33,Real,2,LegatoDesc,S33_click_03_segment_5.wav,false,ok,,
+33,Real,2,NonlegatoAsc,S33_click_03_segment_2.wav,true,ok,audiofile,parece una practica
+33,Real,2,NonlegatoDesc,S33_click_03_segment_3.wav,true,ok,criterio,llega pero no es limpio hay una especie de parada intermedia
+33,Real,2,Overtone,S33_click_03_segment_6.wav,false,,,
+34,Real,1,LegatoAsc,S34_click_01_segment_10.wav,false,ok,,
+34,Real,1,LegatoDesc,S34_click_01_segment_5.wav,true,ok,,
+34,Real,1,NonlegatoAsc,S34_click_01_segment_2.wav,false,ok,sensores,tubo tapado
+34,Real,1,NonlegatoDesc,S34_click_01_segment_3.wav,false,ok,sensores,tubo tapado
+34,Real,1,Overtone,S34_click_01_segment_7.wav,true,ok,,
+34,Real,2,LegatoAsc,S34_click_03_segment_4.wav,true,ok,,
+34,Real,2,LegatoDesc,S34_click_03_segment_5.wav,false,ok,sensores,tubo tapado
+34,Real,2,NonlegatoAsc,S34_click_03_segment_2.wav,false,ok,sensores,tubo tapado
+34,Real,2,NonlegatoDesc,S34_click_03_segment_3.wav,false,ok,sensores,tubo tapado
+34,Real,2,Overtone,S34_click_03_segment_7.wav,true,ok,,
+37,Real,1,LegatoAsc,S37_click_02_segment_4.wav,true,ok,,
+37,Real,1,LegatoDesc,S37_click_02_segment_5.wav,true,ok,,
+37,Real,1,NonlegatoAsc,S37_click_02_segment_6.wav,true,ok,,
+37,Real,1,NonlegatoDesc,S37_click_02_segment_7.wav,true,ok,,
+37,Real,1,Overtone,S37_click_02_segment_8.wav,true,ok,,
+37,Real,2,LegatoAsc,s37_click_04_segment_7.wav,true,ok,,
+37,Real,2,LegatoDesc,s37_click_04_segment_8.wav,true,ok,,
+37,Real,2,NonlegatoAsc,s37_click_04_segment_9.wav,true,ok,,
+37,Real,2,NonlegatoDesc,s37_click_04_segment_10.wav,true,ok,,
+37,Real,2,Overtone,s37_click_04_segment_11.wav,true,ok,,
+49,Real,1,LegatoAsc,S49_click_02_segment_15.wav,true,ok,criterio,en el grave ataca primero el segundo modo
+49,Real,1,LegatoDesc,S49_click_02_segment_8.wav,true,ok,,
+49,Real,1,NonlegatoAsc,S49_click_02_segment_9.wav,true,ok,,
+49,Real,1,NonlegatoDesc,S49_click_02_segment_10.wav,true,ok,,
+49,Real,1,Overtone,S49_click_02_segment_11.wav,true,ok,,
+49,Real,2,LegatoAsc,S49_click_04_segment_9.wav,true,ok,,
+49,Real,2,LegatoDesc,S49_click_04_segment_11.wav,true,ok,,
+49,Real,2,NonlegatoAsc,S49_click_04_segment_4.wav,true,ok,,
+49,Real,2,NonlegatoDesc,S49_click_04_segment_5.wav,true,ok,,
+49,Real,2,Overtone,S49_click_04_segment_12.wav,true,ok,,
+50,Real,1,LegatoAsc,S50_click_02_segment_1.wav,true,ok,,
+50,Real,1,LegatoDesc,S50_click_02_segment_2.wav,true,ok,,
+50,Real,1,NonlegatoAsc,S50_click_02_segment_3.wav,true,ok,,
+50,Real,1,NonlegatoDesc,S50_click_02_segment_4.wav,true,ok,,
+50,Real,1,Overtone,S50_click_02_segment_5.wav,true,ok,,
+50,Real,2,LegatoAsc,S50_click_04_segment_7.wav,true,ok,,
+50,Real,2,LegatoDesc,S50_click_04_segment_8.wav,true,ok,,
+50,Real,2,NonlegatoAsc,S50_click_04_segment_4.wav,true,ok,,
+50,Real,2,NonlegatoDesc,S50_click_04_segment_5.wav,true,ok,,
+50,Real,2,Overtone,S50_click_04_segment_10.wav,true,ok,,
+64,Real,1,LegatoAsc,S64_click_01_segment_2.wav,false,ok,,hay un breve silencio entre modos
+64,Real,1,LegatoDesc,S64_click_01_segment_4.wav,true,ok,,no hay un silencio pero se corta el sonido un poco
+64,Real,1,NonlegatoAsc,S64_click_01_segment_5.wav,true,ok,,
+64,Real,1,NonlegatoDesc,S64_click_01_segment_6.wav,true,ok,,
+64,Real,1,Overtone,S64_click_01_segment_11.wav,true,ok,,suena y se estabiliza
+64,Real,2,LegatoAsc,S64_click_03_segment_7.wav,false,ok,,
+64,Real,2,LegatoDesc,S64_click_03_segment_10.wav,true,ok,criterio,ataque multiestable
+64,Real,2,NonlegatoAsc,S64_click_03_segment_2.wav,true,ok,,
+64,Real,2,NonlegatoDesc,S64_click_03_segment_4.wav,true,ok,,
+64,Real,2,Overtone,S64_click_03_segment_15.wav,true,ok,,en el limite
+70,Real,1,LegatoAsc,S70_click_01_segment_5.wav,false,ok,criterio,ataca primero el grave
+70,Real,1,LegatoDesc,S70_click_01_segment_7.wav,true,ok,,
+70,Real,1,NonlegatoAsc,S70_click_01_segment_8.wav,true,ok,,
+70,Real,1,NonlegatoDesc,S70_click_01_segment_9.wav,true,ok,,
+70,Real,1,Overtone,S70_click_01_segment_11.wav,false,ok,,
+70,Real,2,LegatoAsc,S70_click_03_segment_4.wav,false,ok,criterio,esta en el limite puede ser ok
+70,Real,2,LegatoDesc,S70_click_03_segment_6.wav,true,ok,,
+70,Real,2,NonlegatoAsc,S70_click_03_segment_7.wav,true,ok,,
+70,Real,2,NonlegatoDesc,S70_click_03_segment_8.wav,false,ok,,
+70,Real,2,Overtone,S70_click_03_segment_9.wav,true,ok,,aparece al final
+80,Real,1,LegatoAsc,S80_click_02_segment_16.wav,false,ok,,
+80,Real,1,LegatoDesc,S80_click_02_segment_5.wav,true,ok,,
+80,Real,1,NonlegatoAsc,S80_click_02_segment_6.wav,true,ok,,
+80,Real,1,NonlegatoDesc,S80_click_02_segment_7.wav,true,ok,,
+80,Real,1,Overtone,S80_click_02_segment_9.wav,true,ok,,en el limite
+80,Real,2,LegatoAsc,S80_click_04_segment_12.wav,true,ok,,
+80,Real,2,LegatoDesc,S80_click_04_segment_8.wav,true,ok,,
+80,Real,2,NonlegatoAsc,S80_click_04_segment_2.wav,false,ok,sensores,fuerza 0 y con ruido y fluctuaciones
+80,Real,2,NonlegatoDesc,S80_click_04_segment_3.wav,false,ok,sensores,fuerza con ruido y fluctuaciones
+80,Real,2,Overtone,S80_click_04_segment_10.wav,false,ok,,
+83,Real,1,LegatoAsc,S83_click_02_segment_12.wav,false,ok,,
+83,Real,1,LegatoDesc,S83_click_02_segment_6.wav,true,ok,,
+83,Real,1,NonlegatoAsc,S83_click_02_segment_7.wav,true,ok,,
+83,Real,1,NonlegatoDesc,S83_click_02_segment_8.wav,true,ok,dudoso,parece un f no llega a ser un ataque pero pasa algo raro revisar que el trial sea el correcto
+83,Real,1,Overtone,S83_click_02_segment_9.wav,false,ok,,
+83,Real,2,LegatoAsc,S83_click_04_segment_2.wav,false,ok,dudoso,parece f chequear igual
+83,Real,2,LegatoDesc,S83_click_04_segment_5.wav,true,ok,criterio,en el grave ataca primero el segundo modo
+83,Real,2,NonlegatoAsc,S83_click_04_segment_6.wav,true,ok,dudoso,parece un f no llega a ser un ataque pero pasa algo raro revisar que el trial sea el correcto
+83,Real,2,NonlegatoDesc,S83_click_04_segment_7.wav,true,ok,dudoso,repite el trial debe estar mal el archivo
+83,Real,2,Overtone,S83_click_04_segment_9.wav,false,ok,,en el limite
+88,Real,1,LegatoAsc,S88_click_01_segment_8.wav,false,ok,,
+88,Real,1,LegatoDesc,S88_click_01_segment_9.wav,true,ok,,
+88,Real,1,NonlegatoAsc,S88_click_01_segment_3.wav,true,ok,,
+88,Real,1,NonlegatoDesc,S88_click_01_segment_5.wav,true,ok,,
+88,Real,1,Overtone,S88_click_01_segment_11.wav,true,ok,,
+88,Real,2,LegatoAsc,S88_click_03_segment_5.wav,false,ok,,
+88,Real,2,LegatoDesc,S88_click_03_segment_6.wav,true,ok,,
+88,Real,2,NonlegatoAsc,S88_click_03_segment_3.wav,true,ok,dudoso,ataque multiestable dudoso
+88,Real,2,NonlegatoDesc,S88_click_03_segment_4.wav,true,ok,,
+88,Real,2,Overtone,S88_click_03_segment_7.wav,true,ok,,
+90,Real,1,LegatoAsc,S90_click_02_segment_2.wav,true,ok,,un poco descontrolado pero bien
+90,Real,1,LegatoDesc,S90_click_02_segment_3.wav,true,ok,,
+90,Real,1,NonlegatoAsc,S90_click_02_segment_4.wav,true,ok,,
+90,Real,1,NonlegatoDesc,S90_click_02_segment_5.wav,true,ok,,
+90,Real,1,Overtone,S90_click_02_segment_7.wav,true,ok,,
+90,Real,2,LegatoAsc,S90_click_04_segment_4.wav,false,ok,sensores,no se registro la fuerza
+90,Real,2,LegatoDesc,S90_click_04_segment_5.wav,false,ok,sensores,no se registro la fuerza
+90,Real,2,NonlegatoAsc,S90_click_04_segment_2.wav,false,ok,sensores,no se registro la fuerza
+90,Real,2,NonlegatoDesc,S90_click_04_segment_3.wav,false,ok,sensores,no se registro la fuerza
+90,Real,2,Overtone,S90_click_04_segment_9.wav,false,ok,sensores,no se registro la fuerza

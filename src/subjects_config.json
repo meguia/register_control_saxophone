@@ -1,0 +1,836 @@
+{
+    "subject": {
+        "12": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                }
+            ]
+        },
+        "22": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                }
+            ]
+        },
+        "13": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                }
+            ]
+        },
+        "49": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                }
+            ]
+        },
+        "80": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                }
+            ]
+        },
+        "27": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                }
+            ]
+        },
+        "70": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                }
+            ]
+        },
+        "33": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                }
+            ]
+        },
+        "90": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                }
+            ]
+        },
+        "50": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                }
+            ]
+        },
+        "83": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                }
+            ]
+        },
+        "34": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                }
+            ]
+        },
+        "88": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                }
+            ]
+        },
+        "64": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                }
+            ]
+        },
+        "37": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                }
+            ]
+        },
+        "97": {
+            "block": [
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Model"
+                },
+                {
+                    "task": [
+                        "Practice",
+                        "LegatoAsc",
+                        "LegatoDesc",
+                        "NonlegatoAsc",
+                        "NonlegatoDesc",
+                        "Overtone"
+                    ],
+                    "fingering": "Dx4",
+                    "type": "Real"
+                }
+            ]
+        }
+    }
+}

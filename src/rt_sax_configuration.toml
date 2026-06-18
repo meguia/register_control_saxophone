@@ -1,0 +1,21 @@
+title = "Real Time Saxophone Configuration File"
+# main log for the whole experiment
+logexperiment = "rt_sax_experiment_sept_2025.csv"
+port="/dev/cu.usbserial-2120"
+baudrate=115200
+buf_size=32
+# instrument can be "alto", "tenor", "soprano", "baritone"
+instrument="alto"
+nmodes=8
+# parameter mapping for \gamma and \zeta
+# [minimum expected value of input, maximum expected value of input, minimum parameter value, maximum parameter value]
+param_map = [[0.0, 2000.0, 0.0, 0.99], [9000.0, 15000.0, 0.99, 0.0]]
+logging=true
+# adjust the gain of the audio output and ts for pitch
+ts = 973.0
+# writable part
+gain = 0.2
+#data_path = "testing"
+data_path = "sessions"
+#data_path = "sessions_old"
+#data_path = "session269"

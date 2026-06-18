@@ -1,0 +1,16 @@
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+*.log~
+
+# Julia
+Manifest.toml
+.julia/
+
+# Pluto/runtime scratch
+src/sessions/processed_data/permutation_tests_smoke*/
+src/sessions/processed_data/permutation_tests_N*/
+
+# Keep curated outputs intentionally committed when needed.
+!src/sessions/processed_data/permutation_tests_N100/
