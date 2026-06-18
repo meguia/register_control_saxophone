@@ -1,6 +1,7 @@
 # Register-Control Saxophone Experiment
 
-Clean repository for the register-control saxophone experiment. It contains the code and curated data needed to run the experiment, rebuild the processed trial datasets, and reproduce the analysis/figure pipeline.
+Repository for the register-control saxophone experiment. 
+It contains the code and curated data needed to run the experiment, rebuild the processed trial datasets, and reproduce the analysis/figure pipeline.
 
 ## Layout
 
@@ -61,6 +62,6 @@ For quicker preliminary runs, use a different output folder such as `permutation
 
 ## Notes
 
-- Subject 97 is excluded from the current analysis; subject 13 is retained.
+- Subject 97 is excluded from the current analysis
 - The current Wasserstein ground metric uses global standard-deviation scaling without mean subtraction.
 - The code still uses the internal task name `Overtone` for what is labelled as `Multiphonic` in figures and tables.
