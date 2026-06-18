@@ -6,15 +6,15 @@ include(joinpath(@__DIR__, "..", "src", "rt_sax_experiment_analysis.jl"))
 const ROOT = normpath(joinpath(@__DIR__, ".."))
 const SESSION_REL = "sessions"
 const LOG_CSV = "rt_sax_experiment_sept_2025.csv"
-const REAL_CHOICES = "real_choices.csv"
-const MODEL_CHOICES = "model_choices.csv"
+const REAL_CHOICES = joinpath("reviewed_data", "real_choices.csv")
+const MODEL_CHOICES = joinpath("reviewed_data", "model_choices.csv")
 const REAL_OVERTONE = joinpath(ROOT, "src", "sessions", "reviewed_data", "real_overtone_onoff.csv")
 const MODEL_OVERTONE = joinpath(ROOT, "src", "sessions", "reviewed_data", "model_overtone_onoff.csv")
 const AUDIO_ROOT = joinpath(ROOT, "audiofiles")
 const PROC_DIR = joinpath(ROOT, "src", "sessions", "processed_data")
 const REAL_OUT = joinpath(PROC_DIR, "all_real_trials_wamplitudes_onoff.jld2")
 const MODEL_OUT = joinpath(PROC_DIR, "all_model_trials_wamplitudes_onoff.jld2")
-const LOG_OUT = joinpath(ROOT, "docs", "postprocess_log.md")
+const LOG_OUT = joinpath(ROOT, "logs", "postprocess_log.md")
 
 function pct(n::Int, d::Int)
     d == 0 && return "NaN"
@@ -71,11 +71,11 @@ function to_markdown(start_ts::DateTime, end_ts::DateTime, real_stats, model_sta
 # Postprocess Log - Final Report
 
 **Date:** $(Dates.format(now(), "yyyy-mm-dd HH:MM:SS"))  
-**Workspace:** RTSax-Experiment  
-**Status:** ✅ COMPLETE - Postprocess rerun finished and outputs regenerated
+**Workspace:** register_control_saxophone  
+**Status:** COMPLETE - Postprocess rerun finished and outputs regenerated
 
 ## Objective
-Rerun the full postprocessing pipeline from [docs/postprocessing_and_analysis.md](docs/postprocessing_and_analysis.md), regenerate production outputs, and overwrite this log with fresh metrics.
+Rerun the full postprocessing pipeline, regenerate production outputs, and overwrite this log with fresh metrics.
 
 ## Inputs Used
 - Session log: src/sessions/rt_sax_experiment_sept_2025.csv
@@ -123,8 +123,8 @@ Rerun the full postprocessing pipeline from [docs/postprocessing_and_analysis.md
 | Model | $(model_stats.task.overtone_total) | $(model_stats.task.overtone_mode2_eq1) | $(model_stats.task.overtone_with_any) |
 
 ## Conclusion
-✅ New production JLD2 outputs were regenerated after the OLD rename workflow.
-✅ This log has been overwritten with metrics from this rerun.
+New production JLD2 outputs were regenerated.
+This log has been overwritten with metrics from this rerun.
 """
 end
 
@@ -162,6 +162,7 @@ function main()
 
     end_ts = now()
     md = to_markdown(start_ts, end_ts, real_stats, model_stats)
+    mkpath(dirname(LOG_OUT))
     open(LOG_OUT, "w") do io
         write(io, md)
     end
