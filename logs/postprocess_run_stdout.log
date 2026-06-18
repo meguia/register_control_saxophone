@@ -2,6 +2,6 @@ Starting full postprocess rerun...
 [ Info: choices CSV: skipping non-data row 1: subject,block,task,trial,success
 [ Info: choices CSV: skipping non-data row 1: subject,block,task,trial,success
 Done.
-Real trials: 145, audio filled: 140
-Model trials: 150, audio filled: 140
+Real trials: 140, audio filled: 140
+Model trials: 140, audio filled: 140
 Wrote log: C:\Users\Camilo\register_control_saxophone\logs\postprocess_log.md

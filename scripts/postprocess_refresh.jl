@@ -15,6 +15,7 @@ const PROC_DIR = joinpath(ROOT, "src", "sessions", "processed_data")
 const REAL_OUT = joinpath(PROC_DIR, "all_real_trials_wamplitudes_onoff.jld2")
 const MODEL_OUT = joinpath(PROC_DIR, "all_model_trials_wamplitudes_onoff.jld2")
 const LOG_OUT = joinpath(ROOT, "logs", "postprocess_log.md")
+const EXCLUDED_SUBJECTS = ["97"]
 
 function pct(n::Int, d::Int)
     d == 0 && return "NaN"
@@ -84,6 +85,7 @@ Rerun the full postprocessing pipeline, regenerate production outputs, and overw
 - Real overtone table: src/sessions/reviewed_data/real_overtone_onoff.csv
 - Model overtone table: src/sessions/reviewed_data/model_overtone_onoff.csv
 - Audio root: audiofiles/
+- Excluded subjects before trial loading: $(join(EXCLUDED_SUBJECTS, ", "))
 
 ## Execution Trace
 - START: $(start_ts)
@@ -139,6 +141,7 @@ function main()
         REAL_CHOICES;
         type = :Real,
         root = ROOT,
+        skip_subjects = EXCLUDED_SUBJECTS,
         real_audio_root = AUDIO_ROOT,
         overtone_real_csv = REAL_OVERTONE
     )
@@ -149,6 +152,7 @@ function main()
         MODEL_CHOICES;
         type = :Model,
         root = ROOT,
+        skip_subjects = EXCLUDED_SUBJECTS,
         model_audio_root = AUDIO_ROOT,
         overtone_model_csv = MODEL_OVERTONE
     )
