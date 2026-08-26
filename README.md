@@ -46,10 +46,8 @@ register_control_saxophone/
 └── results/                             # generated and git-ignored
 ```
 
-The publication cohort contains subjects 13, 22, 27, 33, 34, 37, 49, 50, 64,
-70, 80, 83, 88, and 90. The retained raw inputs are 56 session-log records, 56
-block logs, 686 sensor `.dat` files, 280 WAV files, and eight reviewed CSV
-tables. Subject 97 was a pilot and is not included.
+The publication cohort contains anonymized data from the fourteen subjects that performed the experiment. 
+The retained raw inputs are 56 session-log records, 56 block logs, 686 sensor `.dat` files, 280 WAV files, and eight reviewed CSV tables. 
 
 ## Julia environment
 
@@ -61,14 +59,11 @@ Pkg.activate(".")
 Pkg.instantiate()
 ```
 
-The project is an application environment, not a Julia package. Do not run
-`using RegisterControlSaxophone`; include the entry file or numbered script
-shown below.
+The project is an application environment, not a Julia package. 
 
 ## Performing the experiment
 
-The hardware-facing procedure is preserved from the original repository. The
-following files are intentionally untouched:
+The procedure is preserved from the original experiment repository. 
 
 - `src/rt_sax_control.jl`
 - `src/rt_sax_experiment_block.jl`
@@ -121,8 +116,7 @@ runtime.
 
 ## Reproducing Figures 3–6
 
-Run all commands from the repository root. On Windows, the same commands can
-be entered in the Julia REPL with forward slashes in paths.
+Run all commands from the repository root. 
 
 ### Step 1: rebuild processed trials
 
@@ -287,21 +281,3 @@ JLD2 product. The deposited final map validates a 389 × 72 grid with 28,008
 points, 16,635 `T1` cells, 9,095 `T2` cells, 8,661 sampled overlaps, 1,181
 completed mixed-edge simulations, and 269 simulations still mixed at cutoff.
 
-## Integrity check for the experiment procedure
-
-To confirm that the publication branch did not alter the historical runtime,
-compare it with the target repository's `main` branch:
-
-```sh
-git diff origin/main -- \
-  src/rt_sax_control.jl \
-  src/rt_sax_experiment_block.jl \
-  src/rt_serial.jl \
-  src/rt_sax_experiment_test.jl \
-  src/generate_blocks.jl \
-  src/rt_sax_configuration.toml \
-  src/subjects_config.json \
-  src/arduino/RT_Sax_ADC/RT_Sax_ADC.ino
-```
-
-The command should print nothing.
