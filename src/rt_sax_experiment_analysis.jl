@@ -1,11 +1,16 @@
-using Plots, DifferentialEquations, RealTimeAudioDiffEq, LibSerialPort 
+using Plots, DifferentialEquations
 using Glob, JLD2, ProjectRoot, OrderedCollections, Colors, Dierckx
 using Statistics, StatsBase, Printf, WAV, FFTW
 using DSP
 using Measures
 import Base: isless
 
-include("./rt_sax_control.jl")
+# Keep the historical experiment runtime in its own unchanged files. Analysis
+# loads only the pure model equations, so batch processing never initializes an
+# audio device or serial port.
+if !isdefined(@__MODULE__, :saxRN!)
+    include(joinpath(@__DIR__, "sax_model_core.jl"))
+end
 
 # in VSCode expand/collapse regions with Ctrl+K followed by Ctrl+L
 # to collapse all regions: Ctrl+K followed by Ctrl+0
@@ -26,6 +31,7 @@ if !isdefined(@__MODULE__, :RT_SAX_ANALYSIS_PUBLIC_API)
         :pressure_from_adc,
         :parse_block_params,
         :parse_block_tasklist,
+        :read_data,
         :load_trial_data,
         :discover_blocks,
         :build_trials_for_block,
@@ -49,23 +55,13 @@ if !isdefined(@__MODULE__, :RT_SAX_ANALYSIS_PUBLIC_API)
         :plot_task_pf_mode2,
         :plot_task_wregions,
         :plot_gamma_zeta_modes!,
-        :simulate_modes_at_point,
-        :sweep_modes_grid,
-        :plot_sweep_mode_regions,
-        :plot_sweep_mode_regions_pattern,
-        :plot_trials_values,
-        :subject_overview,
-        :print_subject_overview,
-        :make_default_overrides,
-        :apply_override_choices!,
-        :trajectories,
-        :compute_sol,
-        :play_task,
-        :assign_onoff_by_beeps!,
-        :assign_onoff!,
-        :detect_onoff_from_signal,
-        :detect_tones,
-        :evaluate_results_kde,
+        :load_portable_multistability_map,
+        :validate_multistability_map,
+        :paper_multistability_fields,
+        :paper_figure6_gesture_points,
+        :plot_paper_multistability_map,
+        :plot_paper_trial_figure,
+        :save_paper_figure,
     )
 end
 
@@ -92,9 +88,6 @@ if !isdefined(@__MODULE__, :RT_SAX_ANALYSIS_INTERNAL_HELPERS)
         :_note_color_by_order,
         :_bool_runs,
         :_plot_pf_segment!,
-        :_mode_amplitude_series,
-        :_estimate_fixed_point,
-        :_trial_onoff_start_time,
     )
 end
 
@@ -120,6 +113,13 @@ function analysis_public_api()
     end
     return (; pairs...)
 end
+
+#endregion
+
+#region PAPER FIGURE 6: VALIDATED NON-REGULARIZED MULTISTABILITY MAP
+
+include(joinpath(@__DIR__, "multistability_map.jl"))
+include(joinpath(@__DIR__, "paper_figures.jl"))
 
 #endregion
 
@@ -736,10 +736,32 @@ end
 
 #region DATA LOADING
 
+"""Read one binary two-channel sensor file written by the experiment."""
+function read_data(datafile::AbstractString)
+    t1 = Int64[]
+    t2 = Int64[]
+    val1 = Int16[]
+    val2 = Int16[]
+    open(datafile, "r") do io
+        while !eof(io)
+            timestamp = read(io, Int64)
+            channel = read(io, UInt8)
+            value = read(io, Int16)
+            if channel == 1
+                push!(t1, timestamp)
+                push!(val1, value)
+            elseif channel == 2
+                push!(t2, timestamp)
+                push!(val2, value)
+            end
+        end
+    end
+    return t1, t2, val1, val2
+end
+
 #
 # Load a .dat file and return aligned (milliseconds) time vectors and duration.
 # It uses `root` to resolve relative paths.
-# and the function read_data from rt_sax_control.jl
 #
 function load_trial_data(datafile::AbstractString;root::String=@projectroot)
     datafile_abs = project_abs(datafile;root=root)
@@ -1291,97 +1313,6 @@ function all_trials_wamplitudes_onoff(session_dir::String, log_file::String, cho
     end
 end
 
-
-@inline now_s() = Base.time_ns() * 1e-9
-
-# implement start_model_from_trial behavior for this analysis pipeline.
-function start_model_from_trial(trial; gain::Real=0.2,
-                                channel_map::AbstractVector{<:AbstractVector{<:Integer}}=[[3],[5]])
-    @assert hasproperty(trial,:u0) && !isempty(trial.u0)
-    @assert hasproperty(trial,:p0) && !isempty(trial.p0)
-    source = DESource(saxRN!, trial.u0, trial.p0; channel_map=channel_map)
-    output_device = get_default_output_device()
-    start_DESource(source, output_device; buffer_size=convert(UInt32,1024))
-    ts_val = hasproperty(trial,:ts) ? float(trial.ts) : 1.0
-    @atomic source.data.control.ts   = ts_val
-    @atomic source.data.control.gain = float(gain)
-    return source
-end
-
-# implement make_replay_events behavior for this analysis pipeline.
-function make_replay_events(trial; time_units::Symbol=:ms, use_avg::Bool=false)
-    t1 = hasproperty(trial,:t1) ? trial.t1 : Float64[]
-    t2 = hasproperty(trial,:t2) ? trial.t2 : Float64[]
-    v1 = hasproperty(trial,:v1) ? trial.v1 : Float64[]
-    v2 = hasproperty(trial,:v2) ? trial.v2 : Float64[]
-    @assert length(t1)==length(v1) && length(t2)==length(v2)
-    isempty(t1) && isempty(t2) && return Tuple{Float64,Int,Int}[]
-    scale = time_units === :ms ? 1e-3 : time_units === :ns ? 1e-9 : 1.0
-    t1s = Float64.(t1) .* scale
-    t2s = Float64.(t2) .* scale
-    t0  = minimum(vcat(t1s, t2s))
-    t1s .-= t0
-    t2s .-= t0
-    events = Tuple{Float64,Int,Int}[]
-    if use_avg && !isempty(t1s) && !isempty(t2s) && length(t1s)==length(t2s)
-        te = 0.5 .* (t1s .+ t2s)
-        append!(events, ((te[i], 1, Int(v1[i])) for i in eachindex(te)))
-        append!(events, ((te[i], 2, Int(v2[i])) for i in eachindex(te)))
-    else
-        append!(events, ((t1s[i], 1, Int(v1[i])) for i in eachindex(t1s)))
-        append!(events, ((t2s[i], 2, Int(v2[i])) for i in eachindex(t2s)))
-    end
-    sort!(events, by = x -> x[1])
-    return events
-end
-
-# implement feed_channel_from_events! behavior for this analysis pipeline.
-function feed_channel_from_events!(mgr::RTSaxSerialManager,
-                                   events::Vector{Tuple{Float64,Int,Int}})
-    isempty(events) && return nothing
-    chan = mgr.chan
-    isopen(chan) || error("feed_channel_from_events!: channel is closed")
-    t0 = now_s()
-    for (t_rel, id, val) in events
-        while true
-            d = t_rel - (now_s() - t0)
-            d <= 0 && break
-            sleep(d <= 0.005 ? d : min(d, 0.02))
-        end
-        while true
-            isopen(chan) || error("feed_channel_from_events!: channel was closed")
-            length(chan.data) < chan.sz_max && break
-            sleep(1e-4)
-            yield()
-        end
-        put!(chan, (id, val))
-        yield()
-    end
-    return nothing
-end
-
-# implement replay_trial! behavior for this analysis pipeline.
-function replay_trial!(trial; gain::Real=0.2,
-                       time_units::Symbol=:ms, use_avg::Bool=false,
-                       channel_map::AbstractVector{<:AbstractVector{<:Integer}}=[[3],[5]],
-                       warmup_s::Real = 0.5,
-                       mgr_capacity::Int = 65_536)
-    @assert hasproperty(trial,:param_map)
-    events = make_replay_events(trial; time_units=time_units, use_avg=use_avg)
-    source = start_model_from_trial(trial; gain=gain, channel_map=channel_map)
-    mgr = RTSaxSerialManager("REPLAY",115200; buf_size=mgr_capacity)
-    @atomic mgr.reader_stop = true
-    try
-        start_param_updater_only!(mgr, source, trial.param_map)
-        warmup_s > 0 && sleep(warmup_s)
-        feeder_task = Threads.@spawn feed_channel_from_events!(mgr, events)
-        wait(feeder_task)
-    finally
-        stop_update!(mgr)
-        stop_model!(source)
-    end
-    return nothing
-end
 
 # implement get_mode_amps behavior for this analysis pipeline.
 function get_mode_amps(x::AbstractVector{<:Real}, fs::Real, expected_f0::Real)::Vector{Vector{Float64}}
@@ -3201,750 +3132,5 @@ function plot_sweep_mode_regions_pattern(maps;
     return plot(p, p_cb_panel; layout=@layout([a{0.85w} b{0.15w}]))
 end
 
-
-#endregion
-
-#region UNUSED
-
-
-"""
-Placeholder for statistical evaluation of experimental results.
-
-Planned scope:
-- KDE-based comparison of mode-1 (red) vs mode-2 (blue) occupied areas in parameter space.
-- Statistical comparison between trajectories.
-"""
-function plot_trials_values(trials::AbstractVector;
-                            y::Symbol=:v1, x::Symbol=:time,
-                            apply_map::Bool=false,
-                            param_map_override=nothing,
-                            align::Symbol=:start,
-                            normalize::Symbol=:none,
-                            lw::Real=1.5, α::Real=0.9, show_legend::Bool=false)
-
-    isempty(trials) && return plot()
-
-    # Helper to fetch param_map for a trial
-    get_pm = tr -> begin
-        if param_map_override !== nothing
-            param_map_override
-        elseif hasproperty(tr, :param_map) && !isnothing(getproperty(tr,:param_map))
-            getproperty(tr, :param_map)
-        else
-            nothing
-        end
-    end
-
-    # Map a single series according to var and param_map
-    # returns a Vector{Float64} and a tag of origin (:v1 or :v2) to choose time
-    function series_from(tr, var::Symbol)
-        if var === :gamma || (apply_map && var === :v1)
-            pm = get_pm(tr)
-            pm === nothing && error("param_map required to map v1→gamma")
-            yv = getproperty(tr, :v1)
-            return map(x->_mapvals(x, pm[1]), yv), :v1
-        elseif var === :zeta || (apply_map && var === :v2)
-            pm = get_pm(tr)
-            pm === nothing && error("param_map required to map v2→zeta")
-            yv = getproperty(tr, :v2)
-            return map(x->_mapvals(x, pm[2]), yv), :v2
-        elseif var === :v1
-            return getproperty(tr, :v1), :v1
-        elseif var === :v2
-            return getproperty(tr, :v2), :v2
-        else
-            error("Unsupported variable symbol for series: $var")
-        end
-    end
-
-    # Choose a time vector given preferred source (:v1 or :v2) and x selector
-    function time_from(tr, xsel::Symbol, pref::Symbol)
-        if xsel === :t1 && hasproperty(tr,:t1); return getproperty(tr,:t1) end
-        if xsel === :t2 && hasproperty(tr,:t2); return getproperty(tr,:t2) end
-        if xsel === :time || xsel === :auto
-            if pref === :v1 && hasproperty(tr,:t1); return getproperty(tr,:t1) end
-            if pref === :v2 && hasproperty(tr,:t2); return getproperty(tr,:t2) end
-            if hasproperty(tr,:t);  return getproperty(tr,:t)  end
-            if hasproperty(tr,:ts); return getproperty(tr,:ts) end
-        end
-        return nothing  # fallback to index later
-    end
-
-    # Is x time-like?
-    is_time_x = (x === :time || x === :t1 || x === :t2 || x === :auto)
-
-    plt = plot()
-
-    for tr in trials
-        # Y series (+ origin to pick t1/t2 when x is time-like)
-        yv, origin = series_from(tr, y)
-
-        # X axis: either time-like or a second data series
-        if is_time_x
-            tv = time_from(tr, x, origin)
-            tv === nothing && (tv = collect(0:length(yv)-1))
-            if align === :start && !isempty(tv)
-                tv = tv .- tv[1]
-            end
-            # Normalize Y (only)
-            yplot = copy(yv)
-            if normalize === :zscore
-                μ, σ = mean(yplot), std(yplot); σ > 0 && (yplot = (yplot .- μ) ./ σ)
-            elseif normalize === :minmax
-                m, M = minimum(yplot), maximum(yplot); M > m && (yplot = (yplot .- m) ./ (M - m))
-            end
-            # Label
-            sid = hasproperty(tr,:subject_id) ? tr.subject_id : "?"
-            blk = hasproperty(tr,:block) ? tr.block : "?"
-            task = hasproperty(tr,:task) ? string(tr.task) : "?"
-            take = hasproperty(tr,:take) ? tr.take : "?"
-            lbl = show_legend ? "S$(sid) B$(blk) $(task) take $(take)" : ""
-            plot!(plt, tv, yplot, lw=lw, alpha=α, label=lbl)
-        else
-            # Parametric: X series
-            xv, _ = series_from(tr, x)
-            # Enforce same length
-            n = min(length(xv), length(yv))
-            xv = @view xv[1:n]
-            yplot = copy(@view yv[1:n])
-            if normalize === :zscore
-                μ, σ = mean(yplot), std(yplot); σ > 0 && (yplot = (yplot .- μ) ./ σ)
-            elseif normalize === :minmax
-                m, M = minimum(yplot), maximum(yplot); M > m && (yplot = (yplot .- m) ./ (M - m))
-            end
-            sid = hasproperty(tr,:subject_id) ? tr.subject_id : "?"
-            blk = hasproperty(tr,:block) ? tr.block : "?"
-            task = hasproperty(tr,:task) ? string(tr.task) : "?"
-            take = hasproperty(tr,:take) ? tr.take : "?"
-            lbl = show_legend ? "S$(sid) B$(blk) $(task) take $(take)" : ""
-            plot!(plt, xv, yplot, lw=lw, alpha=α, label=lbl)
-        end
-    end
-
-    # Axis labels
-    function varlabel(sym::Symbol)
-        sym === :v1    && return "v1"
-        sym === :v2    && return "v2"
-        sym === :gamma && return "γ (gamma)"
-        sym === :zeta  && return "ζ (zeta)"
-        sym === :time  && return "t"
-        sym === :t1    && return "t1"
-        sym === :t2    && return "t2"
-        sym === :index && return "sample"
-        return String(sym)
-    end
-    if is_time_x
-        xlabel!(plt, varlabel(x === :auto ? :time : x))
-        ylabel!(plt, varlabel(y))
-    else
-        xlabel!(plt, varlabel(x))
-        ylabel!(plt, varlabel(y))
-    end
-    show_legend || plot!(plt, legend=false)
-    return plt
-end
-
-
-
-# Return WAV files for a subject sorted by numeric suffix.
-function list_subject_wavs(subject_id::String, audio_dir::String)
-    pats  = ["S$(subject_id)_*.wav", "S$(subject_id)_*.WAV"]
-    files = String[]
-    for p in pats
-        append!(files, glob(p, audio_dir))
-    end
-    parse_idx(f) = try
-        base = splitext(splitdir(f)[2])[1]
-        parse(Int, split(base, "_")[end])
-    catch
-        typemax(Int)
-    end
-    sort!(files, by=parse_idx)
-    return files
-end
-
-# Extract fingering from filenames like S<id>_<type>_<FING>_...
-function fingering_from_filename(basename::String)
-    parts = split(basename, "_")
-    return length(parts) >= 3 ? parts[3] : ""
-end
-
-# Mark one successful take per task using explicit overrides.
-function mark_success_by_overrides!(trials::Vector{Trial}, overrides::Dict{Tuple{String,Int,Symbol},Int})
-    last_take = Dict{Symbol,Int}()
-    for tr in trials
-        tr.task == :Practice && continue
-        last_take[tr.task] = max(get(last_take, tr.task, 0), tr.take)
-    end
-    for (task, ntakes) in last_take
-        wanted = get(overrides, (trials[1].fingering, trials[1].block, task), 0)
-        wanted = wanted == 0 ? ntakes : wanted
-        for tr in trials
-            tr.success = tr.success || (tr.task == task && tr.take == wanted)
-        end
-    end
-    return trials
-end
-
-# implement subject_overview behavior for this analysis pipeline.
-function subject_overview(subject_id::String, type::Symbol, path::String)
-    refs = discover_blocks(subject_id, type, path)
-    overview = NamedTuple[]
-    for ref in refs
-        all_log = read(ref.logfile, String)
-        pairs = parse_block_tasklist(all_log)
-        takes_by_task = Dict{Symbol,Int}()
-        ordered_trials = NamedTuple[]
-        for (ord, (task, datafile_abs)) in enumerate(pairs)
-            take = get!(takes_by_task, task, 0) + 1
-            takes_by_task[task] = take
-            datafile_rel = to_project_relative(datafile_abs; root=path)
-            push!(ordered_trials, (order=ord, task=task, take=take, datafile_rel=datafile_rel))
-        end
-        tasks_counts = OrderedDict{Symbol,Int}()
-        for k in sort(collect(keys(takes_by_task)) .|> String)
-            tasks_counts[Symbol(k)] = takes_by_task[Symbol(k)]
-        end
-        audiofile_rel = to_project_relative(ref.audiofile; root=path)
-        push!(overview, (fingering=ref.fingering,
-                         block=ref.block_idx,
-                         audiofile_rel=audiofile_rel,
-                         tasks_counts=tasks_counts,
-                         ordered_trials=ordered_trials))
-    end
-    return overview
-end
-
-# implement print_subject_overview behavior for this analysis pipeline.
-function print_subject_overview(overview; include_practice::Bool=false)
-    for blk in overview
-        println("Fingering ", blk.fingering, " | Block ", blk.block,
-                isempty(blk.audiofile_rel) ? "" : " | audio: "*blk.audiofile_rel)
-        println("  Takes per task:")
-        for (task, n) in blk.tasks_counts
-            if include_practice || task != :Practice
-                @printf "    %-14s %d\n" String(task) n
-            end
-        end
-        println("  Ordered trials (order, task, take, datafile_rel):")
-        for tr in blk.ordered_trials
-            if include_practice || tr.task != :Practice
-                @printf "    %3d  %-14s  %2d  %s\n" tr.order String(tr.task) tr.take tr.datafile_rel
-            end
-        end
-        println()
-    end
-end
-
-# implement make_default_overrides behavior for this analysis pipeline.
-function make_default_overrides(ov; include_practice::Bool=false)
-    d = Dict{Tuple{String,Int,Symbol},Int}()
-    for blk in ov
-        for (task, _n) in blk.tasks_counts
-            if include_practice || task != :Practice
-                d[(blk.fingering, blk.block, task)] = 0
-            end
-        end
-    end
-    return d
-end
-
-# implement apply_override_choices! behavior for this analysis pipeline.
-function apply_override_choices!(overrides::Dict{Tuple{String,Int,Symbol},Int},
-                                 choices::Vector{Tuple{String,Int,Symbol,Int}})
-    for (f,b,t,sel) in choices
-        overrides[(f,b,t)] = sel
-    end
-    return overrides
-end
-
-# implement trajectories behavior for this analysis pipeline.
-function trajectories(allexp::Vector{Trial};
-                      param=:pressure, align=:onset, window=(-0.1, 1.5))
-    out = OrderedDict{NTuple{4,Any}, Tuple{Vector{Float64},Vector{Float64}}}()
-    for tr in allexp
-        t  = (param==:pressure ? tr.t1 : tr.t2)
-        y  = (param==:pressure ? tr.v1 : tr.v2)
-        t0 = (align==:onset) ? _trial_onoff_start_time(tr) : 0.0
-        tp = t .- t0
-        sel = findall(tp .>= window[1] .&& tp .<= window[2])
-        !isempty(sel) && (out[(tr.subject_id, tr.type, tr.fingering, tr.task)] = (tp[sel], y[sel]))
-    end
-    return out
-end
-
-# implement compute_sol behavior for this analysis pipeline.
-function compute_sol(t1,t2,γ,ζ,u0, p0, fs)
-    dt = 1/fs
-    tmax = max(t1[end],t2[end])
-    i1 = Ref(1)
-    # implement affect_p1! behavior for this analysis pipeline.
-    function affect_p1!(integrator)
-        if i1[] <= length(γ)
-            integrator.p[1] = γ[i1[]]
-            i1[] += 1
-        end
-    end
-    i2 = Ref(1)
-    # implement affect_p2! behavior for this analysis pipeline.
-    function affect_p2!(integrator)
-        if i2[] <= length(ζ)
-            integrator.p[2] = ζ[i2[]]
-            i2[] += 1
-        end
-    end
-    cb1 = PresetTimeCallback(t1, affect_p1!, save_positions=(false, false))
-    cb2 = PresetTimeCallback(t2, affect_p2!, save_positions=(false, false))
-    prob = ODEProblem(saxRN!,u0,(0,tmax), p0)
-    sol = solve(prob, Tsit5(), callback = CallbackSet(cb1,cb2), saveat = dt)
-    return dropdims(sum(Array(sol)[3:2:end,:],dims=1),dims=1)/2.0
-end
-
-# implement play_task behavior for this analysis pipeline.
-function play_task(block,task,data,param_map,u0, p0,fs=22.05)
-    val = data[block][task]
-    γ = _mapvals.(val[:,2],Ref(param_map[1]))
-    ζ = _mapvals.(val[:,4],Ref(param_map[2]))
-    s = compute_sol(val[:,1],val[:,2],γ,ζ,u0, p0,fs)
-    return s
-end
-
-# implement assign_onoff_by_beeps! behavior for this analysis pipeline.
-function assign_onoff_by_beeps!(trials::Vector{Trial}; f0::Real=700.0, win_ms::Real=120.0, hop_ms::Real=10.0,
-    z_beep::Real=8.0, purity_min::Real=0.40, harmonic_max::Real=0.20,
-    min_sep::Real=0.15, offset_start::Real=0.05,
-    z::Real=3.0, smooth_ms::Real=10.0, minlen::Real=0.20)
-    isempty(trials) && return trials
-    sort!(trials, by = t -> t.order)
-    audiofile = trials[1].audiofile
-    isempty(audiofile) && error("assign_onoff_by_beeps!: missing audiofile for this REAL block")
-    y, fs = wavread(audiofile)
-    y = ndims(y)==1 ? Float64.(y) : vec(mean(y, dims=2))[:]
-    beeps = detect_tones(y, fs, f0;
-        profile=:pure, edges=:onsets,
-        win_ms=win_ms, hop_ms=hop_ms,
-        snr_db=z_beep, purity_min=purity_min,
-        harmonic_max=harmonic_max, min_sep=min_sep)
-    isempty(beeps) && return trials
-    nb = length(beeps); nt = length(trials)
-    useN = min(nb, nt)
-    T = length(y)/fs
-    for i in 1:useN
-        dur_s = trials[i].duration / 1000.0
-        t0 = beeps[i] + offset_start
-        t1 = min(beeps[i] + dur_s, T)
-        if t1 <= t0
-            trials[i].onoff = [(0.0, 0.0, 0.0)]
-            continue
-        end
-        i0 = clamp(round(Int, t0*fs)+1, 1, length(y))
-        i1 = clamp(round(Int, t1*fs), i0, length(y))
-        ywin = y[i0:i1]
-        ts   = collect(0:length(ywin)-1) ./ fs
-        segs = detect_onoff_from_signal(ts, ywin; z=z, smooth_ms=smooth_ms, minlen=minlen)
-        trials[i].onoff = isempty(segs) ? [(0.0, (i1 - i0)/fs, 0.0)] : [(segs[1][1], segs[1][2], 0.0)]
-    end
-    for i in useN+1:nt
-        trials[i].onoff = [(0.0, 0.0, 0.0)]
-    end
-    return trials
-end
-
-# implement assign_onoff! behavior for this analysis pipeline.
-function assign_onoff!(trials::Vector{Trial};
-    beep_f0::Real=700.0, beep_win_ms::Real=120.0, beep_hop_ms::Real=10.0,
-    beep_core_bw_hz::Real=6.0,  beep_ring_gap_hz::Real=20.0, beep_ring_bw_hz::Real=80.0,
-    beep_snr_db::Real=8.0, beep_purity_min::Real=0.40, beep_harmonic_max::Real=0.20,
-    beep_min_frames::Int=2, beep_min_sep::Real=0.15,
-    offset_start::Real=0.05,
-    tone_f0::Union{Nothing,Real}=nothing,
-    tone_n_harmonics::Int=6, tone_include_f0::Bool=true, tone_harm_weights::Symbol=:inv,
-    tone_win_ms::Real=92.0, tone_hop_ms::Real=10.0,
-    tone_core_bw_hz::Real=10.0, tone_ring_gap_hz::Real=30.0, tone_ring_bw_hz::Real=120.0,
-    tone_snr_db::Real=6.0, tone_purity_min::Real=0.30, tone_min_harmonics::Int=3,
-    tone_min_frames::Int=2, tone_min_silence_ms::Real=40.0, tone_min_len_ms::Real=80.0,
-    z::Real=3.0, smooth_ms::Real=10.0, minlen::Real=0.20)
-    isempty(trials) && return trials
-    sort!(trials, by = t -> t.order)
-    audiofile = trials[1].audiofile
-    isempty(audiofile) && error("assign_onoff!: missing audiofile for this block")
-    y, fs = wavread(audiofile)
-    y = ndims(y)==1 ? Float64.(y) : vec(mean(y, dims=2))[:]
-    T = length(y)/fs
-    beeps = detect_tones(y, fs, beep_f0;
-        profile=:pure, edges=:onsets,
-        win_ms=beep_win_ms, hop_ms=beep_hop_ms,
-        core_bw_hz=beep_core_bw_hz, ring_gap_hz=beep_ring_gap_hz, ring_bw_hz=beep_ring_bw_hz,
-        snr_db=beep_snr_db, purity_min=beep_purity_min, harmonic_max=beep_harmonic_max,
-        min_frames=beep_min_frames, min_sep=beep_min_sep)
-    useN = min(length(beeps), length(trials))
-    for i in 1:useN
-        dur_s = trials[i].duration / 1000.0
-        t0 = beeps[i] + offset_start
-        t1 = min(beeps[i] + dur_s, T)
-        if t1 <= t0
-            trials[i].onoff = [(0.0, 0.0, 0.0)]
-            continue
-        end
-        i0 = clamp(round(Int, t0*fs)+1, 1, length(y))
-        i1 = clamp(round(Int, t1*fs), i0, length(y))
-        ywin = y[i0:i1]
-        ts = collect(0:length(ywin)-1) ./ fs
-        segs = Tuple{Float64,Float64}[]
-        if tone_f0 !== nothing
-            segs = detect_tones(ywin, fs, tone_f0;
-                profile=:harmonic, edges=:segments,
-                n_harmonics=tone_n_harmonics, include_f0=tone_include_f0, harm_weights=tone_harm_weights,
-                win_ms=tone_win_ms, hop_ms=tone_hop_ms,
-                core_bw_hz=tone_core_bw_hz, ring_gap_hz=tone_ring_gap_hz, ring_bw_hz=tone_ring_bw_hz,
-                snr_db=tone_snr_db, purity_min=tone_purity_min, min_harmonics=tone_min_harmonics,
-                min_frames=tone_min_frames, min_silence_ms=tone_min_silence_ms, min_len_ms=tone_min_len_ms)
-        end
-        if isempty(segs)
-            segs_amp = detect_onoff_from_signal(ts, ywin; z=z, smooth_ms=smooth_ms, minlen=minlen)
-            if isempty(segs_amp)
-                trials[i].onoff = [(0.0, (i1 - i0)/fs, 0.0)]
-            else
-                lens = map(s -> s[2]-s[1], segs_amp)
-                seg = segs_amp[findmax(lens)[2]]
-                trials[i].onoff = [(seg[1], seg[2], 0.0)]
-            end
-        else
-            lens = map(s -> s[2]-s[1], segs)
-            seg = segs[findmax(lens)[2]]
-            trials[i].onoff = [(seg[1], seg[2], 0.0)]
-        end
-    end
-    for i in useN+1:length(trials)
-        trials[i].onoff = [(0.0, 0.0, 0.0)]
-    end
-    return trials
-end
-
-
-
-
-
-# Moved from active regions: currently not used by Pluto outputs
-function detect_onoff_from_signal(t::Vector{<:Real}, v::Vector{<:Real};   
-                                  z::Real=0.1, smooth_ms::Real=10.0, minlen::Real=0.20)
-
-    length(t) == length(v) || throw(ArgumentError("t and v must have same length"))
-    N = length(t)
-    N >= 3 || return Tuple{Float64,Float64}[]
-
-    t64 = Float64.(t)
-    v64 = Float64.(v)
-
-    # estimate dt and smoothing window
-    dt = median(diff(t64))
-    dt > 0 || throw(ArgumentError("t must be strictly increasing"))
-    w = max(1, round(Int, smooth_ms*1e-3/dt))
-
-    # centered moving average of |v|
-    function movmean_abs(x::Vector{Float64}, win::Int)
-        win <= 1 && return abs.(x)
-        half = win ÷ 2
-        xa = abs.(x)
-        cs = cumsum(vcat(0.0, xa))
-        y = similar(xa)
-        @inbounds for i in 1:length(xa)
-            lo = max(1, i - half)
-            hi = min(length(xa), i + (win - 1 - half))
-            y[i] = (cs[hi] - cs[lo - 1]) / (hi - lo + 1)
-        end
-        return y
-    end
-
-    env = movmean_abs(v64, w)
-    μ = mean(env)
-    σ = std(env) + eps()
-    thr = μ + z*σ
-
-    above = env .>= thr
-
-    # find rising/falling edges
-    segs = Tuple{Float64,Float64}[]
-    in_seg = false
-    start_t = 0.0
-
-    for i in 1:N
-        if !in_seg && above[i]
-            in_seg = true
-            start_t = t64[i]
-        elseif in_seg && !above[i]
-            in_seg = false
-            stop_t = t64[i]
-            if stop_t - start_t >= minlen
-                push!(segs, (start_t, stop_t))
-            end
-        end
-    end
-    if in_seg
-        stop_t = t64[end]
-        if stop_t - start_t >= minlen
-            push!(segs, (start_t, stop_t))
-        end
-    end
-
-    return segs
-end
-
-#
-# Detect tones (pure or harmonic) centered at f0.
-#
-# Inputs
-# - signal :: Vector{<:Real}
-# - fs     :: Real                # sampling rate [Hz]
-# - f0     :: Real                # target fundamental [Hz]
-#
-# Keywords (sensible defaults below)
-# - profile        :: Symbol = :pure       # :pure (beeps) or :harmonic (sax notes)
-# - edges          :: Symbol = :onsets     # :onsets or :segments
-# - n_harmonics    :: Int    = 6           # number of harmonics ABOVE f0 to include when profile=:harmonic
-# - include_f0     :: Bool   = true        # include the fundamental band in the harmonic stack
-# - harm_weights   :: Symbol = :inv        # :equal | :inv | :inv2 (weights for harmonic sum)
-# - win_ms         :: Real   = 120.0       # STFT window length [ms]
-# - hop_ms         :: Real   = 10.0        # STFT hop [ms]
-# - core_bw_hz     :: Real   = 8.0         # half-bandwidth for each (h*f0) core band [Hz]
-# - ring_gap_hz    :: Real   = 25.0        # guard-band just outside core before "ring"
-# - ring_bw_hz     :: Real   = 100.0       # width of ring band per harmonic (local noise ref)
-# - snr_db         :: Real   = 8.0         # min SNR (core vs ring) in dB (overall)
-# - purity_min     :: Real   = 0.35        # min purity = E_core_stack / (E_total - E_core_stack)
-# - min_harmonics  :: Int    = 2           # min #harmonics individually above SNR (only for :harmonic)
-# - harmonic_max   :: Real   = 0.20        # max (E_2f0+E_3f0)/E_f0 for :pure (penalize harmonics)
-# - min_frames     :: Int    = 2           # require this many consecutive positive frames
-# - min_silence_ms :: Real   = 30.0        # fill short 0-gaps inside segments up to this (ms)
-# - min_len_ms     :: Real   = 60.0        # drop segments shorter than this (ms), only for :segments
-# - min_sep        :: Real   = 0.15        # separate onsets by at least this (s), only for :onsets)
-#
-# Returns
-# - if edges == :onsets   → Vector{Float64} of onset times (s)
-# - if edges == :segments → Vector{Tuple{Float64,Float64}} of (on, off) in seconds
-#
-
-function detect_tones(signal::Vector{<:Real}, fs::Real, f0::Real;
-    profile::Symbol = :pure, edges::Symbol = :onsets,
-    n_harmonics::Int = 6, include_f0::Bool = true, harm_weights::Symbol = :inv,
-    win_ms::Real = 120.0, hop_ms::Real = 10.0,
-    core_bw_hz::Real = 8.0, ring_gap_hz::Real = 25.0, ring_bw_hz::Real = 100.0,
-    snr_db::Real = 8.0, purity_min::Real = 0.35, min_harmonics::Int = 2,
-    harmonic_max::Real = 0.20, min_frames::Int = 2,
-    min_silence_ms::Real = 30.0, min_len_ms::Real = 60.0, min_sep::Real = 0.15)
-
-    x = Float64.(signal)
-    Nw_target = max(256, round(Int, fs*win_ms/1_000))
-    Nw = 1 << ceil(Int, log2(Nw_target))          # next power of 2
-    H  = max(1, round(Int, fs*hop_ms/1_000))
-    w  = 0.5 .- 0.5 .* cos.(2π .* (0:Nw-1) ./ Nw) # Hann
-    K  = Nw ÷ 2 + 1
-
-    hz2bin(f) = clamp(round(Int, f*Nw/fs) + 1, 1, K)
-
-    # list of harmonic indices to use
-    Hs = include_f0 ? collect(1:(1+n_harmonics)) : collect(2:(1+n_harmonics))
-    Hs = [h for h in Hs if h*f0 < fs/2 - 1]       # keep under Nyquist
-    isempty(Hs) && return (edges === :segments ? Tuple{Float64,Float64}[] : Float64[])
-
-    # harmonic weights
-    wh = if harm_weights === :equal
-        ones(Float64, length(Hs))
-    elseif harm_weights === :inv
-        1.0 ./ Float64.(Hs)
-    elseif harm_weights === :inv2
-        1.0 ./ (Float64.(Hs).^2)
-    else
-        ones(Float64, length(Hs))
-    end
-    wh ./= sum(wh)  # normalize
-
-    # helpers
-    @inline band_energy(Y, lo, hi) = (lo<=hi ? sum(@view Y[lo:hi]) : 0.0)
-
-    # per-frame loop
-    flags = Bool[]               # decision per frame
-    times = Float64[]            # frame center times
-    score_core = Float64[]       # total core energy (for onset ranking if needed)
-    idx = 1
-    eps1 = 1e-12
-    snr_lin_thresh = 10.0^(snr_db/10)
-
-    while idx + Nw - 1 <= length(x)
-        @views frame = x[idx:idx+Nw-1]
-        Y = abs2.(rfft(frame .* w))  # power spectrum
-        E_tot = sum(Y)
-
-        # accumulate across harmonics
-        E_core_stack = 0.0
-        E_ring_stack = 0.0
-        n_h_ok = 0
-
-        for (j, h) in enumerate(Hs)
-            k0    = hz2bin(h*f0)
-            dcore = max(1, hz2bin(h*f0 + core_bw_hz) - k0)
-            dgap  = max(1, hz2bin(h*f0 + ring_gap_hz) - k0)
-            dring = max(dgap+1, hz2bin(h*f0 + ring_gap_hz + ring_bw_hz) - k0)
-
-            k_lo = max(1, k0 - dcore); k_hi = min(K, k0 + dcore)
-            r1_lo = max(1, k0 + dgap);  r1_hi = min(K, k0 + dring)
-            r2_lo = max(1, k0 - dring); r2_hi = max(1, k0 - dgap)
-
-            E_core_h = band_energy(Y, k_lo, k_hi)
-            nr1 = max(0, r1_hi - r1_lo + 1); nr2 = max(0, r2_hi - r2_lo + 1)
-            E_ring_h = band_energy(Y, r1_lo, r1_hi) + band_energy(Y, r2_lo, r2_hi)
-            nrbins = max(1, nr1 + nr2)
-            E_ring_avg_h = E_ring_h / nrbins
-
-            # individual harmonic SNR test (for :harmonic profile’s min_harmonics)
-            if E_core_h / (E_ring_avg_h + eps1) >= snr_lin_thresh
-                n_h_ok += 1
-            end
-
-            E_core_stack += wh[j] * E_core_h
-            E_ring_stack += wh[j] * E_ring_avg_h
-        end
-
-        E_rest = max(eps1, E_tot - E_core_stack)  # rest of spectrum
-
-        snr_lin = E_core_stack / (E_ring_stack + eps1)
-        purity  = E_core_stack / (E_rest + eps1)
-
-        ok = (snr_lin >= snr_lin_thresh) & (purity >= purity_min)
-
-        if profile === :pure
-            # penalize harmonic presence: compare (approx) 2f0+3f0 vs f0
-            # estimate f0 energy as the first term (if included); else relax
-            if include_f0 && !isempty(Hs) && Hs[1] == 1
-                # recompute a quick 2f0+3f0 vs f0 ratio
-                kf0 = hz2bin(f0); d0 = max(1, hz2bin(f0 + core_bw_hz) - kf0)
-                E_f0 = band_energy(Y, max(1, kf0 - d0), min(K, kf0 + d0))
-                E_h  = 0.0
-                for h in (2,3)
-                    kh = hz2bin(h*f0); dh = max(1, hz2bin(h*f0 + core_bw_hz) - kh)
-                    E_h += band_energy(Y, max(1, kh - dh), min(K, kh + dh))
-                end
-                ok &= (E_h / (E_f0 + eps1) <= harmonic_max)
-            end
-        else
-            # require multiple harmonics individually "good"
-            ok &= (n_h_ok >= min_harmonics)
-        end
-
-        push!(flags, ok)
-        push!(times, (idx + Nw/2 - 1) / fs)
-        push!(score_core, E_core_stack)
-        idx += H
-    end
-
-    # temporal persistence
-    good = falses(length(flags))
-    run = 0
-    for i in eachindex(flags)
-        run = flags[i] ? run + 1 : 0
-        good[i] = run >= min_frames
-    end
-
-    # fill short gaps (morphological closing) up to min_silence_ms
-    if any(good)
-        gap_max = max(0, round(Int, (min_silence_ms/1_000) / (hop_ms/1_000)))
-        if gap_max > 0
-            i = 1
-            while i <= length(good)
-                if good[i]
-                    # skip inside segment
-                    while i <= length(good) && good[i]; i += 1; end
-                    # count zeros gap
-                    zstart = i
-                    while i <= length(good) && !good[i]; i += 1; end
-                    zend = i - 1
-                    zlen = (zstart<=zend) ? (zend - zstart + 1) : 0
-                    if zlen > 0 && zlen <= gap_max && i <= length(good) && good[i]
-                        fill!(view(good, zstart:zend), true)
-                    end
-                else
-                    i += 1
-                end
-            end
-        end
-    end
-
-    if edges === :segments
-        # build (on, off) from good[]
-        segs = Tuple{Float64,Float64}[]
-        i = 1
-        while i <= length(good)
-            if good[i]
-                j = i
-                while j < length(good) && good[j+1]; j += 1; end
-                t_on  = times[i]
-                t_off = times[j]
-                if (t_off - t_on) >= (min_len_ms/1_000)
-                    push!(segs, (t_on, t_off))
-                end
-                i = j + 1
-            else
-                i += 1
-            end
-        end
-        return segs
-    else
-        # onsets only: take transitions 0->1 and enforce min_sep
-        onsets = Float64[]
-        prev = false
-        for i in eachindex(good)
-            if good[i] && !prev
-                push!(onsets, times[i])
-            end
-            prev = good[i]
-        end
-        # enforce min_sep
-        if length(onsets) > 1
-            filt = Float64[onsets[1]]
-            for k in 2:length(onsets)
-                if onsets[k] - filt[end] >= min_sep
-                    push!(filt, onsets[k])
-                end
-            end
-            onsets = filt
-        end
-        return onsets
-    end
-end
-
-# implement _trial_onoff_start_time behavior for this analysis pipeline.
-function _trial_onoff_start_time(tr::Trial)
-    isempty(tr.onoff) && return 0.0
-    return tr.onoff[1][1]
-end
-
-# implement evaluate_results_kde behavior for this analysis pipeline.
-function evaluate_results_kde(; kwargs...)
-    # Intentionally left empty for future implementation.
-    return nothing
-end
-
-
-#
-# plot_trials_values(trials; y=:v1, x=:time, apply_map=false,
-#                    param_map_override=nothing, align=:start, normalize=:none,
-#                    lw=1.5, α=0.9, show_legend=false)
-#
-# Plot either against time or as a parametric curve.
-#
-# Arguments
-# - trials  :: Vector{Trial}
-#
-# Keywords
-# - y       :: Symbol  # one of :v1, :v2, :gamma, :zeta
-# - x       :: Symbol  # :time, :t1, :t2, :index, or one of :v1, :v2, :gamma, :zeta
-# - apply_map :: Bool  # if true and y/x are :v1/:v2, map to :gamma/:zeta using param_map
-# - param_map_override :: Union{Nothing,Vector{Tuple}}  # optional [ (a,b,c,d), (a,b,c,d) ]
-# - align   :: :start | :none   # only applies when x is time-like (:time/:t1/:t2)
-# - normalize :: :none | :zscore | :minmax  # applied to Y only
-# - lw, α, show_legend :: styling
-#
-# Assumptions
-# - Each Trial may carry: v1, v2, t1, t2, t/ts, subject_id, block, task, take, param_map
-#
 
 #endregion
