@@ -4,13 +4,13 @@ Thumbs.db
 *.bak
 *.log~
 
-# Julia
-Manifest.toml
+# Julia and analysis outputs
 .julia/
+src/sessions/processed_data/*
+!src/sessions/processed_data/.gitkeep
+results/*
+!results/.gitkeep
 
-# Pluto/runtime scratch
-src/sessions/processed_data/permutation_tests_smoke*/
-src/sessions/processed_data/permutation_tests_N*/
-
-# Keep curated outputs intentionally committed when needed.
-!src/sessions/processed_data/permutation_tests_N100/
+# Long continuation products are restartable but are not publication inputs.
+src/sessions/processed_data/bifurcation_regularized_Dx4/
+src/sessions/processed_data/multistability_nonregularized_Dx4/

@@ -52,6 +52,8 @@ if !isdefined(@__MODULE__, :RT_SAX_STATISTICS_PUBLIC_API)
         :compute_nonlegato_trial_wasserstein_distances_optimaltransport,
         :compute_nonlegato_pooled_wasserstein_distances,
         :compute_nonlegato_pooled_wasserstein_distances_optimaltransport,
+        :compute_paper_wasserstein_summary,
+        :plot_paper_wasserstein_figure,
         :occupancy_map,
         :occupancy_overlap,
         :plot_kde_contour,
@@ -3081,3 +3083,8 @@ end
 
 #endregion
 
+#region PAPER FIGURE 5: WASSERSTEIN SUMMARY
+
+include(joinpath(@__DIR__, "paper_wasserstein.jl"))
+
+#endregion
