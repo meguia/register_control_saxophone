@@ -318,8 +318,9 @@ Maintainer release sequence:
    CC BY 4.0 as the second license in the Zenodo record metadata.
 3. Sign in to Zenodo with GitHub, synchronize the repository list, and enable
    `meguia/register_control_saxophone` before making the GitHub release.
-4. Create and push the `v1.0.0` tag, then publish a GitHub release from that
-   exact tag. Zenodo will ingest the release and create a DOI record.
+4. Update the version in `CITATION.cff`, create and push the matching version
+   tag, then publish a GitHub release from that exact tag. Zenodo will ingest
+   the release and create a DOI record.
 5. Verify the Zenodo file inventory and metadata before citing it. Use the
    version DOI in the paper because it identifies the exact archived files;
    retain the concept DOI as the persistent link to the latest version.
