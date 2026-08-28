@@ -3,9 +3,7 @@ message: "If you use this code or the deposited data, cite the archived release 
 title: "Register Control in Saxophone Playing: experiment, data, and analysis companion"
 type: software
 version: 1.0.0
-license:
-  - MIT
-  - CC-BY-4.0
+license: MIT
 authors:
   - family-names: "Ruiz"
     given-names: "Dario"

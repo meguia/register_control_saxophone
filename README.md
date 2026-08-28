@@ -313,7 +313,9 @@ Maintainer release sequence:
 
 1. Run `scripts/00_validate_repository.jl` and the reproduction commands
    above from a clean checkout.
-2. Confirm that the GitHub release displays both licenses declared below.
+2. Confirm that the archive contains the dual-license notice. Zenodo's GitHub
+   importer accepts one license from `CITATION.cff`; after ingestion, add
+   CC BY 4.0 as the second license in the Zenodo record metadata.
 3. Sign in to Zenodo with GitHub, synchronize the repository list, and enable
    `meguia/register_control_saxophone` before making the GitHub release.
 4. Create and push the `v1.0.0` tag, then publish a GitHub release from that
