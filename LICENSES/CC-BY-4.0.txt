@@ -1,0 +1,16 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+The licensed research materials may be shared and adapted for any purpose,
+provided appropriate credit is given, a link to the license is supplied, and
+changes are indicated. No additional legal or technological restrictions may
+be applied that prevent others from exercising the rights granted by the
+license.
+
+This notice is a readable summary and not a substitute for the license. The
+complete legal code is available at:
+
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Canonical license description:
+
+https://creativecommons.org/licenses/by/4.0/

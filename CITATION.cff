@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this code or the deposited data, cite the archived release and the accompanying paper."
+title: "Register Control in Saxophone Playing: experiment, data, and analysis companion"
+type: software
+version: 1.0.0
+license:
+  - MIT
+  - CC-BY-4.0
+authors:
+  - family-names: "Ruiz"
+    given-names: "Dario"
+  - family-names: "Ortega Brook"
+    given-names: "Antonio"
+  - family-names: "Proscia"
+    given-names: "Martin"
+  - family-names: "Eguia"
+    given-names: "Manuel C."
+abstract: >-
+  Code and de-identified research data accompanying the study "Saxophone
+  register control in a pressure-lip-force control plane: real-time modeling
+  and performance measurements." The deposit preserves the original
+  experiment runtime, paper-cohort sensor sessions and audio recordings,
+  reviewed annotations, analysis pipelines, and the compact validated product
+  used for Figure 6.
+repository-code: "https://github.com/meguia/register_control_saxophone"
+url: "https://github.com/meguia/register_control_saxophone"
+keywords:
+  - "saxophone"
+  - "register control"
+  - "musical acoustics"
+  - "bifurcation analysis"
+  - "multistability"
+  - "optimal transport"
+  - "research data"

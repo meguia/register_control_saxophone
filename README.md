@@ -6,17 +6,20 @@ raw sensor sessions and WAV files, and the minimum analysis needed to rebuild
 paper Figures 3, 4, 5, and 6.
 
 There is deliberately no Julia package module and no notebook dependency. The
-workflow uses the original source files through `include` and five numbered
-scripts.
+workflow uses the original source files through `include`, one integrity
+checker, and five numbered analysis scripts.
 
 ## Repository contents
 
 ```text
 register_control_saxophone/
+├── CITATION.cff                       # citation and Zenodo release metadata
+├── LICENSE and LICENSES/               # MIT code; CC BY 4.0 research material
 ├── audiofiles/                         # 280 WAV files, 14 paper subjects
 ├── data/derived/
 │   └── multistability_map_v1.jld2      # compact validated Figure 6 map
 ├── scripts/
+│   ├── 00_validate_repository.jl
 │   ├── 01_postprocess.jl
 │   ├── 02_wasserstein_distances.jl
 │   ├── 03_permutation_tests.jl
@@ -46,8 +49,26 @@ register_control_saxophone/
 └── results/                             # generated and git-ignored
 ```
 
-The publication cohort contains anonymized data from the fourteen subjects that performed the experiment. 
-The retained raw inputs are 56 session-log records, 56 block logs, 686 sensor `.dat` files, 280 WAV files, and eight reviewed CSV tables. 
+The publication cohort contains de-identified data from the fourteen subjects
+that performed the experiment. The retained raw inputs are one 56-row session
+index, 56 block logs, 675 referenced sensor `.dat` files, 280 WAV files, and
+eight reviewed CSV tables. The raw logs preserve acquisition-machine source paths
+written by Julia; these identify the laboratory installation, not the
+participants, and are not used by the analysis.
+
+## Validate the deposit
+
+After cloning or downloading the repository and instantiating Julia, run the
+fast structural check before starting an analysis:
+
+```sh
+julia --project=. scripts/00_validate_repository.jl
+```
+
+The checker verifies the paper-cohort inventory, session-index links, WAV
+containers, reviewed tables, exclusion of participant 97, and dimensions and
+counts of the compact Figure 6 product. It does not run the expensive
+continuation or statistical computations.
 
 ## Julia environment
 
@@ -281,3 +302,38 @@ JLD2 product. The deposited final map validates a 389 × 72 grid with 28,008
 points, 16,635 `T1` cells, 9,095 `T2` cells, 8,661 sampled overlaps, 1,181
 completed mixed-edge simulations, and 269 simulations still mixed at cutoff.
 
+## Citation and Zenodo release
+
+`CITATION.cff` supplies the authors, title, version, and description used by
+GitHub and supported by Zenodo. The GitHub repository is the development
+location; the immutable Zenodo release and its version-specific DOI should be
+cited for exact reproduction of the paper.
+
+Maintainer release sequence:
+
+1. Run `scripts/00_validate_repository.jl` and the reproduction commands
+   above from a clean checkout.
+2. Confirm that the GitHub release displays both licenses declared below.
+3. Sign in to Zenodo with GitHub, synchronize the repository list, and enable
+   `meguia/register_control_saxophone` before making the GitHub release.
+4. Create and push the `v1.0.0` tag, then publish a GitHub release from that
+   exact tag. Zenodo will ingest the release and create a DOI record.
+5. Verify the Zenodo file inventory and metadata before citing it. Use the
+   version DOI in the paper because it identifies the exact archived files;
+   retain the concept DOI as the persistent link to the latest version.
+
+Once the DOI exists, replace the GitHub URL in the manuscript's Data
+Availability statement with `https://doi.org/<version DOI>`.
+
+The reviewed CSV tables are the definitive release inputs for trial inclusion
+and interval selection. Consequently, Figure 5 and its reported global scales
+must be generated from a fresh run of `scripts/01_postprocess.jl`, not from an
+older processed Notebook 08 cache.
+
+## Licenses
+
+The software is distributed under the MIT License. The deposited research
+data, WAV recordings, impedance and derived data, participant schedule, and
+documentation are distributed under the Creative Commons Attribution 4.0
+International License. The exact file-level allocation is defined in
+`LICENSE`; the corresponding notices are under `LICENSES/`.

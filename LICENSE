@@ -1,0 +1,20 @@
+This repository contains software, documentation, research data, and audio
+recordings under two licenses.
+
+Software license
+----------------
+
+The Julia and Arduino source code, software configuration, and Julia project
+environment are licensed under the MIT License. See `LICENSES/MIT.txt`.
+
+Research-material license
+-------------------------
+
+The contents of `audiofiles/`, `data/`, `src/sessions/`, and
+`src/impedances/`, together with `src/subjects_config.json`, `README.md`, and
+`CITATION.cff`, are licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0). See `LICENSES/CC-BY-4.0.txt`.
+
+The licenses do not remove ethical obligations concerning the responsible use
+of human-participant research materials. The deposited identifiers are study
+pseudonyms and must not be used in attempts to identify participants.
